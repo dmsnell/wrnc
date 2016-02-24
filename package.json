@@ -1,0 +1,24 @@
+{
+  "name": "wrnc",
+  "version": "1.0.0",
+  "description": "A react component serving as a client for the WordPress.com notifications API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dmsnell/wrnc.git"
+  },
+  "keywords": [
+    "React",
+    "WordPress.com",
+    "notifications"
+  ],
+  "author": "Dennis Snell <dennis.snell@automattic.com>",
+  "license": "GPL-2.0",
+  "bugs": {
+    "url": "https://github.com/dmsnell/wrnc/issues"
+  },
+  "homepage": "https://github.com/dmsnell/wrnc#readme"
+}
