@@ -1,3 +1,6 @@
+import {
+	flowRight
+} from 'lodash';
 import React from 'react';
 import { connect } from 'react-redux';
 
@@ -5,9 +8,8 @@ import ApiPoller from 'api-poller';
 import { WpcomConnection } from 'wpcom-connection';
 
 import {
-	NOTE_ADD,
-	NOTE_REMOVE,
-} from './constants';
+	addNote, removeNote
+} from './actions';
 
 const Layout = React.createClass( {
 	render() {
@@ -37,14 +39,8 @@ const mapStateToProps = state => ( {
 } );
 
 const mapDispatchToProps = dispatch => ( {
-	addNote: note => dispatch( {
-		type: NOTE_ADD,
-		note
-	} ),
-	removeNote: note => dispatch( {
-		type: NOTE_REMOVE,
-		note
-	} )
+	addNote: flowRight( dispatch, addNote ),
+	removeNote: flowRight( dispatch, removeNote )
 } );
 
 export default connect( mapStateToProps, mapDispatchToProps )( Layout );
