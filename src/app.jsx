@@ -1,16 +1,25 @@
+import { Map } from 'immutable';
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 
 import Layout from 'layout';
 import reducers from 'reducers';
 
-const store = createStore( reducers );
+const initialState = {
+	notes: Map()
+};
 
-ReactDOM.render(
-	<Provider { ...{ store } }>
-		<Layout />
-	</Provider>,
-	document.getElementById( 'root' )
-);
+const store = createStore( reducers, initialState );
+
+const App = React.createClass( {
+	render() {
+		return (
+			<Provider { ...{ store } }>
+				<Layout { ...this.props } />
+			</Provider>
+		);
+	}
+} );
+
+export default App;

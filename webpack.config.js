@@ -2,7 +2,7 @@ var webpack = require( 'webpack' );
 var HtmlWebpackPlugin = require( 'html-webpack-plugin' );
 
 module.exports = {
-	entry: './src/app.jsx',
+	entry: __dirname + '/localApp.jsx',
 	output: {
 		path: __dirname,
 		filename: 'index.js'

@@ -1,16 +1,28 @@
+import { fromJS, Map } from 'immutable';
 import { combineReducers } from 'redux';
+
 import {
-	UPDATE_MESSAGE
+	NOTE_ADD,
+	NOTE_REMOVE,
 } from 'constants';
 
-const message = ( state = 'Building…', action ) => {
-	if ( UPDATE_MESSAGE !== action.type ) {
-		return state;
-	}
+const notes = ( state = Map(), action ) => {
+	const { type, note } = action;
 	
-	return action.message;
+	switch ( type ) {
+		case NOTE_ADD:
+			return state
+				.set( note.id, fromJS( note ) );
+		
+		case NOTE_REMOVE:
+			return state
+				.delete( note.id );
+		
+		default:
+			return state;
+	}
 };
 
 export default combineReducers( {
-	message
+	notes
 } );

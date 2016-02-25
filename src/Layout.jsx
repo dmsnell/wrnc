@@ -1,31 +1,49 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+import ApiPoller from 'api-poller';
+import { WpcomConnection } from 'wpcom-connection';
+
 import {
-	UPDATE_MESSAGE
-} from 'constants';
+	NOTE_ADD,
+	NOTE_REMOVE,
+} from './constants';
 
 const Layout = React.createClass( {
 	render() {
-		const { message, updateMessage } = this.props;
+		const {
+			addNote,
+			notes,
+			oAuthToken,
+			removeNote,
+		} = this.props;
 		
 		return (
 			<div>
-				<p onClick={ updateMessage.bind( null, 'Done!' ) }>Layout building…</p>
-				<p>{ message }</p>
+				<ApiPoller { ...{ addNote, removeNote } } />
+				<WpcomConnection { ...{ oAuthToken } } />
+				<ul>
+					{ notes.map( ( note, key ) => (
+						<li { ...{ key } }>{ note.get( 'subject' ).first().get( 'text' ) }</li>
+					) ) }
+				</ul>
 			</div>
 		);
 	}
 } );
 
 const mapStateToProps = state => ( {
-	message: state.message
+	notes: state.notes.toList()
 } );
 
 const mapDispatchToProps = dispatch => ( {
-	updateMessage: message => dispatch( {
-		type: UPDATE_MESSAGE,
-		message
+	addNote: note => dispatch( {
+		type: NOTE_ADD,
+		note
+	} ),
+	removeNote: note => dispatch( {
+		type: NOTE_REMOVE,
+		note
 	} )
 } );
 
