@@ -9,7 +9,7 @@ import { WpcomConnection } from 'wpcom-connection';
 
 import {
 	addNote, removeNote
-} from './actions';
+} from 'actions';
 
 const Layout = React.createClass( {
 	render() {
