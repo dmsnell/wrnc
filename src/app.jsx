@@ -1,6 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
 
-const App = () => <p>Building…</p>;
+import Layout from 'layout';
+import reducers from 'reducers';
 
-ReactDOM.render( <App />, document.getElementById( 'root' ) );
+const store = createStore( reducers );
+
+ReactDOM.render(
+	<Provider { ...{ store } }>
+		<Layout />
+	</Provider>,
+	document.getElementById( 'root' )
+);
