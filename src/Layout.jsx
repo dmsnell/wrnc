@@ -5,6 +5,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import ApiPoller from 'api-poller';
+import PingHub from 'pinghub';
 import { WpcomConnection } from 'wpcom-connection';
 
 import {
@@ -18,11 +19,14 @@ const Layout = React.createClass( {
 			notes,
 			oAuthToken,
 			removeNote,
+			requestNote,
+			userId
 		} = this.props;
 		
 		return (
 			<div>
 				<ApiPoller { ...{ addNote, removeNote } } />
+				<PingHub { ...{ requestNote } } />
 				<WpcomConnection { ...{ oAuthToken } } />
 				<ul>
 					{ notes.map( ( note, key ) => (
@@ -40,7 +44,8 @@ const mapStateToProps = state => ( {
 
 const mapDispatchToProps = dispatch => ( {
 	addNote: flowRight( dispatch, addNote ),
-	removeNote: flowRight( dispatch, removeNote )
+	removeNote: flowRight( dispatch, removeNote ),
+	requestNote: note => console.log( note )
 } );
 
 export default connect( mapStateToProps, mapDispatchToProps )( Layout );

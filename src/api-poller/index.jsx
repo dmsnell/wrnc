@@ -22,8 +22,8 @@ const ApiPoller = React.createClass( {
 } );
 
 ApiPoller.PropTypes = {
-	onNewNote: PropTypes.func,
-	onRemoveNote: PropTypes.func
+	addNote: PropTypes.func,
+	removeNote: PropTypes.func
 };
 
 export default ApiPoller;
