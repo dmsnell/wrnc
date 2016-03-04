@@ -9,7 +9,7 @@ import ApiPoller from 'api-poller';
 import Filter from 'filter';
 import FilterBar, { getFilter } from 'filter-bar';
 import NoteListView from 'note-list-view';
-import NoteView from 'note-view';
+import SingleViewLayout from 'single-view-layout';
 import { WpcomConnection } from 'wpcom-connection';
 
 import {
@@ -38,10 +38,7 @@ const Layout = React.createClass( {
 				<ApiPoller { ...{ addNote, removeNote } } />
 				<WpcomConnection { ...{ oAuthToken } } />
 				{ selectedNote
-					? <div>
-						  <button onClick={ unselectNote }>Back</button>
-						  <NoteView note={ notes.find( propEquals( 'id', selectedNote ) ) } />
-					  </div>
+					? <SingleViewLayout {...{ notes, selectedNote, unselectNote } } />
 					: <div>
 						  <FilterBar { ...{ selectedFilter, updateFilter } }>
 							  <Filter name="All" filter={ constant( true ) } />
