@@ -1,24 +1,23 @@
 import {
 	compose,
 	constant,
-	negate,
-	property
+	partial
 } from 'lodash/fp';
 import React from 'react';
 import { connect } from 'react-redux';
 
 import ApiPoller from 'api-poller';
+import Filter from 'filter';
 import FilterBar, { getFilter } from 'filter-bar';
+import NoteView from 'note-view';
 import { WpcomConnection } from 'wpcom-connection';
 
 import {
-	addNote, removeNote,
+	addNote, removeNote, selectNote,
 	updateFilter
 } from 'actions';
 
-const Filter = React.createClass( {
-	render() { return null; }
-} );
+const propEquals = ( prop, value ) => a => a.get( prop ) === value;
 
 const Layout = React.createClass( {
 	render() {
@@ -28,6 +27,8 @@ const Layout = React.createClass( {
 			oAuthToken,
 			removeNote,
 			selectedFilter,
+			selectNote,
+			selectedNote,
 			updateFilter
 		} = this.props;
 		
@@ -35,31 +36,44 @@ const Layout = React.createClass( {
 			<div>
 				<ApiPoller { ...{ addNote, removeNote } } />
 				<WpcomConnection { ...{ oAuthToken } } />
-				<FilterBar { ...{ selectedFilter, updateFilter } }>
-					<Filter name="All" filter={ constant( true ) } />
-					<Filter name="Unread" filter={ note => note.get( 'read' ) != true } />
-					<Filter name="Comments" filter={ note => note.get( 'type' ) === 'comment' } />
-					<Filter name="Follows" filter={ note => note.get( 'type' ) === 'follow' } />
-					<Filter name="Likes" filter={ note => note.get( 'type' ) === 'like' } />
-				</FilterBar>
-				<ul>
-					{ notes.map( ( note, key ) => (
-						<li { ...{ key } }>{ note.get( 'subject' ).first().get( 'text' ) }</li>
-					) ) }
-				</ul>
+				{ selectedNote
+					? <div>
+						  <button onClick={ partial( selectNote, [ null ] ) }>Back</button>
+						  <NoteView note={ notes.find( propEquals( 'id', selectedNote ) ) } />
+					  </div>
+					: <div><FilterBar { ...{ selectedFilter, updateFilter } }>
+					 	  <Filter name="All" filter={ constant( true ) } />
+						  <Filter name="Unread" filter={ propEquals( 'read', 0 ) } />
+						  <Filter name="Comments" filter={ propEquals( 'type', 'comment' ) } />
+						  <Filter name="Follows" filter={ propEquals( 'type', 'follow' ) } />
+						  <Filter name="Likes" filter={ propEquals( 'type', 'like' ) } />
+					  </FilterBar>
+					  <ul>
+						  { notes.map( ( note, key ) => (
+							  <li
+								  onClick={ partial( selectNote, [ note.get( 'id' ) ] ) }
+								  { ...{ key } }
+							  >
+								  { note.get( 'subject' ).first().get( 'text' ) }
+							  </li>
+						  ) ) }
+					  </ul></div>
+				}
 			</div>
 		);
 	}
 } );
 
-const mapStateToProps = ( { notes, selectedFilter }) => ( {
+const mapStateToProps = ( { notes, selectedFilter, selectedNote } ) => ( {
 	notes: notes.toList().filter( getFilter( selectedFilter ) ),
-	selectedFilter
+	selectedFilter,
+	selectedNote
 } );
 
 const mapDispatchToProps = dispatch => ( {
 	addNote: compose( dispatch, addNote ),
 	removeNote: compose( dispatch, removeNote ),
+	selectNote: compose( dispatch, selectNote ),
 	updateFilter: compose( dispatch, updateFilter )
 } );
 

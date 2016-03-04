@@ -5,6 +5,7 @@ import {
 	FILTER_SET,
 	NOTE_ADD,
 	NOTE_REMOVE,
+	NOTE_SELECT
 } from 'constants';
 
 const notes = ( state = Map(), action ) => {
@@ -32,7 +33,16 @@ const selectedFilter = ( state = null, { type, name } ) => {
 	return name;
 };
 
+const selectedNote = ( state = null, { type, id } ) => {
+	if ( NOTE_SELECT !== type ) {
+		return state;
+	}
+	
+	return id;
+};
+
 export default combineReducers( {
 	notes,
-	selectedFilter
+	selectedFilter,
+	selectedNote
 } );
