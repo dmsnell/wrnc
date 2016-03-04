@@ -10,7 +10,7 @@ const NoteView = React.createClass( {
 			<div>
 				<h1>{ note.get( 'subject' ).first().get( 'text' ) }</h1>
 				{ note.get( 'body' ).map( ( block, key ) => (
-					<p>{ block.get( 'text' ) }</p>
+					<p {...{ key } }>{ block.get( 'text' ) }</p>
 				) ) }
 			</div>
 		);

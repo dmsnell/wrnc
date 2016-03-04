@@ -13,7 +13,7 @@ import NoteView from 'note-view';
 import { WpcomConnection } from 'wpcom-connection';
 
 import {
-	addNote, removeNote, selectNote,
+	addNote, removeNote, selectNote, unselectNote,
 	updateFilter
 } from 'actions';
 
@@ -29,6 +29,7 @@ const Layout = React.createClass( {
 			selectedFilter,
 			selectNote,
 			selectedNote,
+			unselectNote,
 			updateFilter
 		} = this.props;
 		
@@ -38,7 +39,7 @@ const Layout = React.createClass( {
 				<WpcomConnection { ...{ oAuthToken } } />
 				{ selectedNote
 					? <div>
-						  <button onClick={ partial( selectNote, [ null ] ) }>Back</button>
+						  <button onClick={ unselectNote }>Back</button>
 						  <NoteView note={ notes.find( propEquals( 'id', selectedNote ) ) } />
 					  </div>
 					: <div><FilterBar { ...{ selectedFilter, updateFilter } }>
@@ -74,6 +75,7 @@ const mapDispatchToProps = dispatch => ( {
 	addNote: compose( dispatch, addNote ),
 	removeNote: compose( dispatch, removeNote ),
 	selectNote: compose( dispatch, selectNote ),
+	unselectNote: compose( dispatch, unselectNote ),
 	updateFilter: compose( dispatch, updateFilter )
 } );
 

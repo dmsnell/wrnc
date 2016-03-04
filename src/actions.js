@@ -1,4 +1,8 @@
 import {
+	partial
+} from 'lodash';
+
+import {
 	FILTER_SET,
 	NOTE_ADD,
 	NOTE_REMOVE,
@@ -19,6 +23,8 @@ export const selectNote = id => ( {
 	type: NOTE_SELECT,
 	id
 } );
+
+export const unselectNote = partial( selectNote, null );
 
 export const updateFilter = name => ( {
 	type: FILTER_SET,
