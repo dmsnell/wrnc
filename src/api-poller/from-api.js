@@ -1,7 +1,6 @@
 import {
-	map,
-	partialRight
-} from 'lodash';
+	map
+} from 'lodash/fp';
 
 const noteFromApi = note => {
 	const { timestamp } = note;
@@ -12,11 +11,9 @@ const noteFromApi = note => {
 	};
 };
 
-const notesFromApi = partialRight( map, noteFromApi );
-
 export default ( { last_seen_time, notes }) => {
 	return {
 		lastSeenTime: last_seen_time,
-		notes: notesFromApi( notes )
+		notes: [ ...notes ].map( noteFromApi )
 	};
 };

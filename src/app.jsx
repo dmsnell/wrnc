@@ -1,11 +1,16 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import { applyMiddleware, createStore } from 'redux';
+import createLogger from 'redux-logger';
 
 import Layout from 'layout';
 import reducers from 'reducers';
 
-const store = createStore( reducers );
+const logger = createLogger();
+const store = createStore(
+	reducers,
+	applyMiddleware( logger )
+);
 
 const App = React.createClass( {
 	render() {

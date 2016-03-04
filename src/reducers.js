@@ -2,6 +2,7 @@ import { fromJS, Map } from 'immutable';
 import { combineReducers } from 'redux';
 
 import {
+	FILTER_SET,
 	NOTE_ADD,
 	NOTE_REMOVE,
 } from 'constants';
@@ -23,6 +24,15 @@ const notes = ( state = Map(), action ) => {
 	}
 };
 
+const selectedFilter = ( state = null, { type, name } ) => {
+	if ( FILTER_SET !== type ) {
+		return state;
+	}
+	
+	return name;
+};
+
 export default combineReducers( {
-	notes
+	notes,
+	selectedFilter
 } );

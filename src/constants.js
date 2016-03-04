@@ -1,2 +1,4 @@
-export const NOTE_ADD = Symbol();
-export const NOTE_REMOVE = Symbol();
+export const FILTER_SET = 'filter-set';
+
+export const NOTE_ADD = 'note-add';
+export const NOTE_REMOVE = 'note-remove';

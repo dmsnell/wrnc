@@ -26,7 +26,7 @@ async function refreshNotes() {
 	const { notes } = await fetchAll();
 	
 	notes.forEach( addNote );
-};
+}
 
 const pollingLoop = () => {
 	refreshNotes();
