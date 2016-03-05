@@ -41,8 +41,10 @@ const Layout = React.createClass( {
 	}
 } );
 
+const compareTimestamps = ( a, b ) => b.get( 'timestamp' ) - a.get( 'timestamp' );
+
 const mapStateToProps = ( { notes, selectedFilter, selectedNote } ) => ( {
-	notes: notes.toList().filter( getFilter( selectedFilter ) ),
+	notes: notes.toList().filter( getFilter( selectedFilter ) ).sort( compareTimestamps ),
 	selectedFilter,
 	selectedNote
 } );
