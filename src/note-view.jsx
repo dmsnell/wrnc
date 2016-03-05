@@ -6,12 +6,16 @@ const NoteView = React.createClass( {
 			note
 		} = this.props;
 		
+		const subject = note.getIn( [ 'subject', 'text' ] );
+		const subjectExcerpt = note.getIn( [ 'subjectExcerpt', 'text' ] );
+		const body = note.get( 'body' );
+
 		return (
 			<div>
-				<h1>{ note.getIn( [ 'subject', 'text' ] ) }</h1>
-				{ note.has( 'subjectExcerpt' ) &&
-					<h2>{ note.getIn( [ 'subjectExcerpt', 'text' ] ) }</h2> }
-				{ note.get( 'body' ).map( ( block, key ) => (
+				<h1>{ subject }</h1>
+				{ subjectExcerpt &&
+					<h2>{ subjectExcerpt }</h2> }
+				{ body.map( ( block, key ) => (
 					<p {...{ key } }>{ block.get( 'text' ) }</p>
 				) ) }
 			</div>

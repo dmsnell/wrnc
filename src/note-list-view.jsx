@@ -11,15 +11,17 @@ const NoteListView = React.createClass( {
 			selectNote
 		} = this.props;
 		
-		const hasSubjectExcerpt = note.has( 'subjectExcerpt' );
+		const subject = note.getIn( [ 'subject', 'text' ] );
+		const subjectExcerpt = note.getIn( [ 'subjectExcerpt', 'text' ] );
+		const timestamp = moment( note.get( 'timestamp' ) ).fromNow();
 
 		return (
 			<div onClick={ partial( selectNote, note.get( 'id' ) ) }>
-				<h1>{ note.getIn( [ 'subject', 'text' ] ) }</h1>
-				{ hasSubjectExcerpt &&
-					<h2>{ note.getIn( [ 'subjectExcerpt', 'text' ] ) }</h2>
+				<h1>{ subject }</h1>
+				{ subjectExcerpt &&
+					<h2>{ subjectExcerpt }</h2>
 				}
-				<h3>{ moment( note.get( 'timestamp' ) ).fromNow() }</h3>
+				<h3>{ timestamp }</h3>
 			</div>
 		);
 	}
