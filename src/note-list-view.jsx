@@ -10,13 +10,13 @@ const NoteListView = React.createClass( {
 			selectNote
 		} = this.props;
 		
-		const hasSubjectExcerpt = note.get( 'subject' ).count() > 1;
-		
+		const hasSubjectExcerpt = note.has( 'subjectExcerpt' );
+
 		return (
 			<div onClick={ partial( selectNote, note.get( 'id' ) ) }>
-				<h1>{ note.get( 'subject' ).first().get( 'text' ) }</h1>	
+				<h1>{ note.getIn( [ 'subject', 'text' ] ) }</h1>
 				{ hasSubjectExcerpt &&
-					<h2>{ note.get( 'subject' ).last().get( 'text' ) }</h2>
+					<h2>{ note.getIn( [ 'subjectExcerpt', 'text' ] ) }</h2>
 				}
 			</div>
 		);

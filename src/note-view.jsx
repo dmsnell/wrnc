@@ -8,7 +8,9 @@ const NoteView = React.createClass( {
 		
 		return (
 			<div>
-				<h1>{ note.get( 'subject' ).first().get( 'text' ) }</h1>
+				<h1>{ note.getIn( [ 'subject', 'text' ] ) }</h1>
+				{ note.has( 'subjectExcerpt' ) &&
+					<h2>{ note.getIn( [ 'subjectExcerpt', 'text' ] ) }</h2> }
 				{ note.get( 'body' ).map( ( block, key ) => (
 					<p {...{ key } }>{ block.get( 'text' ) }</p>
 				) ) }
