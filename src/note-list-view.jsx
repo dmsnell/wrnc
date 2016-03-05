@@ -4,6 +4,8 @@ import {
 } from 'lodash';
 import moment from 'moment';
 
+require( 'note-list-view.scss' );
+
 const NoteListView = React.createClass( {
 	render() {
 		const {
@@ -11,17 +13,17 @@ const NoteListView = React.createClass( {
 			selectNote
 		} = this.props;
 		
+		const selectThisNote = partial( selectNote, note.get( 'id' ) );
 		const subject = note.getIn( [ 'subject', 'text' ] );
 		const subjectExcerpt = note.getIn( [ 'subjectExcerpt', 'text' ] );
 		const timestamp = moment( note.get( 'timestamp' ) ).fromNow();
 
 		return (
-			<div onClick={ partial( selectNote, note.get( 'id' ) ) }>
-				<h1>{ subject }</h1>
+			<div className="note-list-view" onClick={ selectThisNote }>
+				<div className="subject">{ subject }</div>
 				{ subjectExcerpt &&
-					<h2>{ subjectExcerpt }</h2>
-				}
-				<h3>{ timestamp }</h3>
+					<div className="subject excerpt">{ subjectExcerpt }</div> }
+				<div className="timestamp">{ timestamp }</div>
 			</div>
 		);
 	}

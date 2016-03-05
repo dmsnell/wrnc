@@ -4,6 +4,8 @@ import NoteView from 'note-view';
 
 const propEquals = ( prop, value ) => a => a.get( prop ) === value;
 
+require( 'single-view-layout.scss' );
+
 const SingleViewLayout = React.createClass( {
 	render() {
 		const {
@@ -13,8 +15,8 @@ const SingleViewLayout = React.createClass( {
 		} = this.props;
 		
 		return (
-			<div>
-				<button onClick={ unselectNote }>Back</button>
+			<div className="single-view-layout">
+				<a className="back-link" onClick={ unselectNote }>Back</a>
 				<NoteView note={ notes.find( propEquals( 'id', selectedNote ) ) } />
 			</div>
 		);

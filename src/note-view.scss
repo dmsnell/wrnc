@@ -1,0 +1,14 @@
+@import "~styles/color.scss";
+@import "~styles/sizes.scss";
+@import "~styles/typography.scss";
+
+.note-view {
+	color: $gray;
+	font-family: $serif, $serif-fallback;
+	font-size: $font-size;
+
+	.subject:not(.excerpt) {
+		color: $gray-dark;
+		font-weight: bold;
+	}
+}

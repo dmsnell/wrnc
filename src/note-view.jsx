@@ -1,5 +1,7 @@
 import React from 'react';
 
+require( 'note-view.scss' );
+
 const NoteView = React.createClass( {
 	render() {
 		const {
@@ -11,10 +13,10 @@ const NoteView = React.createClass( {
 		const body = note.get( 'body' );
 
 		return (
-			<div>
-				<h1>{ subject }</h1>
+			<div className="note-view">
+				<div className="subject">{ subject }</div>
 				{ subjectExcerpt &&
-					<h2>{ subjectExcerpt }</h2> }
+					<div className="subject excerpt">{ subjectExcerpt }</div> }
 				{ body.map( ( block, key ) => (
 					<p {...{ key } }>{ block.get( 'text' ) }</p>
 				) ) }

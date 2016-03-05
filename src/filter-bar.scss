@@ -1,0 +1,24 @@
+@import "~styles/color.scss";
+@import "~styles/typography.scss";
+
+.filter-bar {
+	font-family: $serif;
+	list-style: none;
+	margin-left: 0;
+	padding-left: 0;
+
+	li {
+		float: left;
+		margin-right: 1em;
+		padding: 3px;
+
+		&.isSelected,
+		&:hover {
+			color: $blue-dark;
+		}
+
+		&:last-child {
+			float: none;
+		}
+	}
+}

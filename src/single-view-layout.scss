@@ -1,0 +1,14 @@
+@import "~styles/color.scss";
+@import "~styles/typography.scss";
+
+.single-view-layout {
+	.back-link {
+		display: block;
+		font-family: $serif;
+		margin-bottom: 12px;
+
+		&:hover {
+			color: $blue-dark;
+		}
+	}
+}

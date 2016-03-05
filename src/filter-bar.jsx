@@ -15,6 +15,8 @@ const filterExtractor = compose( pick( [ 'name', 'filter' ] ), property( 'props'
 
 export const getFilter = name => getOr( constant( true ), 'filter', filters.find( matchesProperty( 'name', name ) ) );
 
+require( 'filter-bar.scss' );
+
 const FilterBar = React.createClass( {
 	componentWillMount() {
 		this.updateFilterList();
@@ -37,7 +39,7 @@ const FilterBar = React.createClass( {
 		} = this.props;
 
 		return (
-			<ul>
+			<ul className="filter-bar">
 				{ filters.map( ( { name }, key ) => (
 					<li
 						className={ classNames( { isSelected: selectedFilter === name } ) }
