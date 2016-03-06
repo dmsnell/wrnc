@@ -7,6 +7,19 @@
 	font-family: $serif, $serif-fallback;
 	font-size: $font-size;
 	margin-bottom: 12px;
+	clear: left;
+
+	.avatar {
+		height: $icon-size;
+		width: $icon-size;
+		float: left;
+		margin-right: 12px;
+	}
+
+	.icon {
+		height: 16px;
+		width: 16px;
+	}
 
 	.subject:not(.excerpt) {
 		color: $gray-dark;

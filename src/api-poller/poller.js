@@ -17,7 +17,7 @@ const fetchAll = () => wpcom()
 		path: '/notifications/',
 		apiVersion: '1.1'
 	}, {
-		number: 10
+		number: 100
 	} )
 	.then( fromApi );
 
