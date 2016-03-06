@@ -4,17 +4,16 @@ import { applyMiddleware } from 'redux';
 import createLogger from 'redux-logger';
 
 import { AppFactory } from 'src/app';
-const App = AppFactory(
-	applyMiddleware( createLogger() )
-);
+import RoutedApp from 'routing-wrapper';
 
 import {
 	oAuthToken
 } from './config.js';
 
 ReactDOM.render(
-	<App { ...{
-		oAuthToken
-	} } />,
+	RoutedApp(
+		AppFactory,
+		applyMiddleware( createLogger() )
+	)( { ...{ oAuthToken } } ),
 	document.getElementById( 'root' )
 );

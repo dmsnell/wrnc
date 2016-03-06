@@ -22,7 +22,10 @@ export const AppFactory = ( middleware = identity ) => {
 		middleware
 	);
 
-	return App( store );
+	return {
+		App: App( store ),
+		store
+	};
 };
 
-export default AppFactory();
+export default AppFactory().App;
