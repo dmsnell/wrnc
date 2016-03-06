@@ -1,7 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { applyMiddleware } from 'redux';
+import createLogger from 'redux-logger';
 
-import App from 'src/app';
+import { AppFactory } from 'src/app';
+const App = AppFactory(
+	applyMiddleware( createLogger() )
+);
 
 import {
 	oAuthToken

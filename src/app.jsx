@@ -1,18 +1,12 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { applyMiddleware, createStore } from 'redux';
-import createLogger from 'redux-logger';
+import { createStore } from 'redux';
+import { identity } from 'lodash';
 
 import Layout from 'layout';
 import reducers from 'reducers';
 
-const logger = createLogger();
-const store = createStore(
-	reducers,
-	applyMiddleware( logger )
-);
-
-const App = React.createClass( {
+const App = store => React.createClass( {
 	render() {
 		return (
 			<Provider { ...{ store } }>
@@ -22,4 +16,13 @@ const App = React.createClass( {
 	}
 } );
 
-export default App;
+export const AppFactory = ( middleware = identity ) => {
+	const store = createStore(
+		reducers,
+		middleware
+	);
+
+	return App( store );
+};
+
+export default AppFactory();
