@@ -8,7 +8,7 @@ import {
 const mapNoticon = key => getOr( 'star', key, {
 	'\uf814': 'mention',
 	'\uf300': 'comment',
-	'\uf801': 'follow',
+	'\uf801': 'add',
 	'\uf455': 'info',
 	'\uf470': 'lock',
 	'\uf806': 'stats',
