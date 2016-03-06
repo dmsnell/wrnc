@@ -7,23 +7,23 @@ import {
 
 const ApiPoller = React.createClass( {
 	componentDidMount() {
-		const { addNote, removeNote } = this.props;
-		
-		startPolling( addNote, removeNote );
+		const { addNotes, removeNotes } = this.props;
+
+		startPolling( addNotes, removeNotes );
 	},
-	
+
 	componentWillUnmount() {
 		stopPolling();
 	},
-	
+
 	render() {
 		return null;
 	}
 } );
 
 ApiPoller.PropTypes = {
-	onNewNote: PropTypes.func,
-	onRemoveNote: PropTypes.func
+	addNotes: PropTypes.func,
+	removeNotes: PropTypes.func
 };
 
 export default ApiPoller;

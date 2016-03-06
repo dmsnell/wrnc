@@ -1,5 +1,6 @@
 import {
-	partial
+	partial,
+	castArray
 } from 'lodash';
 
 import {
@@ -9,14 +10,14 @@ import {
 	NOTE_SELECT
 } from 'constants';
 
-export const addNote = note => ( {
+export const addNotes = notes => ( {
 	type: NOTE_ADD,
-	note
+	notes: castArray( notes )
 } );
 
-export const removeNote = note => ( {
+export const removeNotes = ids => ( {
 	type: NOTE_REMOVE,
-	note
+	ids: castArray( ids )
 } );
 
 export const selectNote = id => ( {

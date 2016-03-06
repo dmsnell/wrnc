@@ -6,9 +6,9 @@ import fromApi from './from-api';
 import { wpcom } from 'wpcom-connection';
 
 const state = {
-	addNote: noop,
+	addNotes: noop,
 	delay: 20 * 1000,
-	removeNote: noop,
+	removeNotes: noop,
 	timer: null
 };
 
@@ -17,32 +17,32 @@ const fetchAll = () => wpcom()
 		path: '/notifications/',
 		apiVersion: '1.1'
 	}, {
-		number: 10
+		number: 100
 	} )
 	.then( fromApi );
 
 async function refreshNotes() {
-	const { addNote } = state;
+	const { addNotes } = state;
 	const { notes } = await fetchAll();
-	
-	notes.forEach( addNote );
+
+	addNotes( notes );
 }
 
 const pollingLoop = () => {
 	refreshNotes();
-	
+
 	state.timer = setTimeout( pollingLoop, state.delay );
 };
 
-export const startPolling = ( addNote = noop, removeNote = noop ) => {
+export const startPolling = ( addNotes = noop, removeNotes = noop ) => {
 	if ( null !== state.timer ) {
 		return;
 	}
-	
+
 	Object.assign( state, {
 		timer: setTimeout( pollingLoop, 0 ),
-		addNote,
-		removeNote
+		addNotes,
+		removeNotes
 	} );
 };
 
@@ -50,12 +50,12 @@ export const stopPolling = () => {
 	if ( null === state.timer ) {
 		return;
 	}
-	
+
 	clearTimeout( state.timer );
-	
+
 	Object.assign( state, {
 		timer: null,
-		addNote: noop,
-		removeNote: noop
+		addNotes: noop,
+		removeNotes: noop
 	} );
 };

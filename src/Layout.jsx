@@ -10,30 +10,30 @@ import SingleViewLayout from 'single-view-layout';
 import { WpcomConnection } from 'wpcom-connection';
 
 import {
-	addNote, removeNote, selectNote, unselectNote,
+	addNotes, removeNotes, selectNote, unselectNote,
 	updateFilter
 } from 'actions';
 
 const Layout = React.createClass( {
 	render() {
 		const {
-			addNote,
+			addNotes,
+			note,
 			notes,
 			oAuthToken,
-			removeNote,
+			removeNotes,
 			selectedFilter,
 			selectNote,
-			selectedNote,
 			unselectNote,
 			updateFilter
 		} = this.props;
-		
+
 		return (
 			<div>
-				<ApiPoller { ...{ addNote, removeNote } } />
+				<ApiPoller { ...{ addNotes, removeNotes } } />
 				<WpcomConnection { ...{ oAuthToken } } />
-				{ selectedNote
-					? <SingleViewLayout {...{ notes, selectedNote, unselectNote } } />
+				{ note
+					? <SingleViewLayout {...{ note, unselectNote } } />
 					: <ListViewLayout {...{ notes, selectNote, selectedFilter, updateFilter } } /> }
 			</div>
 		);
@@ -41,14 +41,14 @@ const Layout = React.createClass( {
 } );
 
 const mapStateToProps = ( { notes, selectedFilter, selectedNote } ) => ( {
+	note: notes.get( selectedNote ),
 	notes,
-	selectedFilter,
-	selectedNote
+	selectedFilter
 } );
 
 const mapDispatchToProps = dispatch => ( {
-	addNote: compose( dispatch, addNote ),
-	removeNote: compose( dispatch, removeNote ),
+	addNotes: compose( dispatch, addNotes ),
+	removeNotes: compose( dispatch, removeNotes ),
 	selectNote: compose( dispatch, selectNote ),
 	unselectNote: compose( dispatch, unselectNote ),
 	updateFilter: compose( dispatch, updateFilter )
