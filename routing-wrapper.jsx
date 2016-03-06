@@ -1,27 +1,40 @@
 import React from 'react';
-import { Router, Route, browserHistory } from 'react-router';
+import { IndexRoute, Router, Route, browserHistory } from 'react-router';
 import { compose, applyMiddleware } from 'redux';
 import { identity } from 'lodash';
 
 import {
+	FILTER_SET,
 	NOTE_SELECT
 } from 'src/constants';
 
-const ROUTE_SELECT = 'routing-middleware-route-select';
+const ROUTE_FILTER_SET = 'routing-middleware-filter-select';
+const ROUTE_NOTE_SELECT = 'routing-middleware-note-select';
 
-const routingMiddleware = selectNote => store => next => action => {
-	const { id, type, fromRoutingMiddleware } = action;
+const routingMiddleware = ( { selectNote, setFilter } ) => store => next => action => {
+	const { id, type, name, fromRoutingMiddleware } = action;
+
+	if ( fromRoutingMiddleware ) {
+		return next( action );
+	}
 
 	switch ( type ) {
-		case NOTE_SELECT:
-			if ( fromRoutingMiddleware ) {
-				return next( action );
-			}
+		case FILTER_SET:
+			setFilter( name );
+			return next( action );
 
+		case ROUTE_FILTER_SET:
+			return next( {
+				...action,
+				fromRoutingMiddleware: true,
+				type: FILTER_SET
+			} );
+
+		case NOTE_SELECT:
 			selectNote( id );
 			return next( action );
 
-		case ROUTE_SELECT:
+		case ROUTE_NOTE_SELECT:
 			return next( {
 				...action,
 				fromRoutingMiddleware: true,
@@ -31,8 +44,6 @@ const routingMiddleware = selectNote => store => next => action => {
 		default:
 			return next( action );
 	}
-
-	selectNote( id );
 };
 
 const Wrapper = ( Factory, enhancers = identity ) => props => {
@@ -42,40 +53,68 @@ const Wrapper = ( Factory, enhancers = identity ) => props => {
 		componentWillMount() {
 			const localApp = Factory( compose(
 				enhancers,
-				applyMiddleware( routingMiddleware( this.selectNote ) )
+				applyMiddleware( routingMiddleware( {
+					selectNote: this.selectNote,
+					setFilter: this.setFilter
+				} ) )
 			) );
 
 			App = localApp.App;
 			store = localApp.store;
 
-			const { selectedNote } = this.props.params;
-
-			this.dispatchAction( selectedNote );
+			this.dispatchAction( this.props.params );
 		},
 
-		componentWillReceiveProps( { params: { selectedNote } } ) {
-			this.dispatchAction( selectedNote );
+		componentWillReceiveProps( nextProps ) {
+			console.log( nextProps );
+			this.dispatchAction( nextProps.params );
 		},
 
-		dispatchAction( selectedNote ) {
+		buildPath( params ) {
+			let { selectedFilter, selectedNote } = params;
+			const state = store.getState();
+
+			if ( ! selectedFilter ) {
+				selectedFilter = state.selectedFilter;
+			}
+
+			if ( ! selectedNote ) {
+				selectedNote = state.selectedNote;
+			}
+
+			return '' +
+				( selectedFilter ? '/filter/' + selectedFilter : '' ) +
+				( selectedNote ? '/note/' + selectedNote : '' );
+		},
+
+		dispatchAction( { selectedFilter: name = null, selectedNote } ) {
 			const id = selectedNote
 				? parseInt( selectedNote, 10 )
 				: null;
 
 			store.dispatch( {
-				type: ROUTE_SELECT,
+				type: ROUTE_FILTER_SET,
+				name
+			} );
+
+			store.dispatch( {
+				type: ROUTE_NOTE_SELECT,
 				id
 			} );
 		},
 
 		selectNote( id ) {
 			if ( id ) {
-				return browserHistory.push( `/${ id }` );
+				return browserHistory.push( this.buildPath( { selectedNote: id } ) );
 			}
 
 			if ( null === id ) {
 				return browserHistory.goBack();
 			}
+		},
+
+		setFilter( name ) {
+			browserHistory.push( this.buildPath( { selectedFilter: name } ) );
 		},
 
 		render() {
@@ -84,10 +123,19 @@ const Wrapper = ( Factory, enhancers = identity ) => props => {
 	} );
 };
 
-const RoutingComponent = ( Factory, enhancers ) => props => (
-	<Router history={ browserHistory }>
-		<Route path="/(:selectedNote)" component={ Wrapper( Factory, enhancers )( props ) } />
-	</Router>
-);
+const RoutingComponent = ( Factory, enhancers ) => props => {
+	const App = Wrapper( Factory, enhancers )( props );
+	
+	return (
+		<Router history={ browserHistory }>
+			<Route path="/" component={ App }>
+				<IndexRoute component={ App } />
+				<Route path="/filter/:selectedFilter/note/:selectedNote" component={ App } />
+				<Route path="/filter/:selectedFilter" component={ App } />
+				<Route path="/note/:selectedNote" component={ App } />
+			</Route>
+		</Router>
+	);
+};
 
 export default RoutingComponent;

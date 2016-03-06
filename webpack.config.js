@@ -23,11 +23,13 @@ module.exports = {
 	},
 	plugins: [
 		new HtmlWebpackPlugin( {
-			inject: true,
+			inject: false,
 			templateContent:
 			'<html><head>' +
 			'<meta http-equiv="Content-type" content="text/html; charset=utf-8"/>' +
-			'</head><body><div id="root"/></body></html>'
+			'</head><body><div id="root"/>' +
+			'<script src="/index.js"></script>' +
+			'</body></html>'
 		} )
 	],
 	resolve: {
