@@ -10,26 +10,23 @@ import {
 	property
 } from 'lodash/fp';
 
-let filters = [];
-const filterExtractor = compose( pick( [ 'name', 'filter' ] ), property( 'props' ) );
-
-export const getFilter = name => getOr( constant( true ), 'filter', filters.find( matchesProperty( 'name', name ) ) );
-
 require( 'filter-bar.scss' );
 
-const FilterBar = React.createClass( {
+const filterExtractor = compose( pick( [ 'name', 'filter' ] ), property( 'props' ) );
+
+const FilterBar = state => React.createClass( {
 	componentWillMount() {
 		this.updateFilterList();
 	},
-	
+
 	componentWillUpdate() {
 		this.updateFilterList();
 	},
-	
+
 	updateFilterList() {
 		const { children } = this.props;
 
-		filters = React.Children.map( children, filterExtractor );
+		state.filters = React.Children.map( children, filterExtractor );
 	},
 
 	render() {
@@ -37,6 +34,7 @@ const FilterBar = React.createClass( {
 			selectedFilter,
 			updateFilter
 		} = this.props;
+		const { filters } = state;
 
 		return (
 			<ul className="filter-bar">
@@ -54,4 +52,21 @@ const FilterBar = React.createClass( {
 	}
 } );
 
-export default FilterBar;
+const FilterBarFactory = () => {
+	const state = {
+		filters: []
+	};
+
+	const getFilter = name => getOr(
+		constant( true ),
+		'filter',
+		state.filters.find( matchesProperty( 'name', name ) )
+	);
+
+	return {
+		FilterBar: FilterBar( state ),
+		getFilter
+	};
+};
+
+export default FilterBarFactory;

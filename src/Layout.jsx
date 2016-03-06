@@ -5,7 +5,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import ApiPoller from 'api-poller';
-import { getFilter } from 'filter-bar';
 import ListViewLayout from 'list-view-layout';
 import SingleViewLayout from 'single-view-layout';
 import { WpcomConnection } from 'wpcom-connection';
@@ -41,10 +40,8 @@ const Layout = React.createClass( {
 	}
 } );
 
-const compareTimestamps = ( a, b ) => b.get( 'timestamp' ) - a.get( 'timestamp' );
-
 const mapStateToProps = ( { notes, selectedFilter, selectedNote } ) => ( {
-	notes: notes.toList().filter( getFilter( selectedFilter ) ).sort( compareTimestamps ),
+	notes,
 	selectedFilter,
 	selectedNote
 } );

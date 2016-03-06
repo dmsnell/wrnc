@@ -4,10 +4,25 @@ import {
 } from 'lodash';
 
 import Filter from 'filter';
-import FilterBar from 'filter-bar';
+import FilterBarFactory from 'filter-bar';
 import NoteListView from 'note-list-view';
 
+const { FilterBar, getFilter } = FilterBarFactory();
+
+const compareTimestamps = ( a, b ) => b.get( 'timestamp' ) - a.get( 'timestamp' );
 const propEquals = ( prop, value ) => a => a.get( prop ) === value;
+
+const transformProps = props => {
+	const {
+		notes,
+		selectedFilter
+	} = props;
+
+	return {
+		...props,
+		notes: notes.toList().filter( getFilter( selectedFilter ) ).sort( compareTimestamps )
+	};
+};
 
 const ListViewLayout = React.createClass( {
 	render() {
@@ -16,7 +31,7 @@ const ListViewLayout = React.createClass( {
 			selectNote,
 			selectedFilter,
 			updateFilter
-		} = this.props;
+		} = transformProps( this.props );
 		
 		return (
 			<div>
