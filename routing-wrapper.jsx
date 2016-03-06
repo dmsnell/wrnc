@@ -62,11 +62,23 @@ const Wrapper = ( Factory, enhancers = identity ) => props => {
 			App = localApp.App;
 			store = localApp.store;
 
+			// If we load on a specific note, provide a
+			// "back" item in history to get back to the
+			// main list.
+			if ( this.props.params.selectedNote ) {
+				const path = this.buildPath( this.props.params );
+
+				browserHistory.push( this.buildPath( {
+					...this.props.params,
+					selectedNote: null
+				} ) );
+				browserHistory.push( path );
+			}
+
 			this.dispatchAction( this.props.params );
 		},
 
 		componentWillReceiveProps( nextProps ) {
-			console.log( nextProps );
 			this.dispatchAction( nextProps.params );
 		},
 
@@ -125,7 +137,7 @@ const Wrapper = ( Factory, enhancers = identity ) => props => {
 
 const RoutingComponent = ( Factory, enhancers ) => props => {
 	const App = Wrapper( Factory, enhancers )( props );
-	
+
 	return (
 		<Router history={ browserHistory }>
 			<Route path="/" component={ App }>
