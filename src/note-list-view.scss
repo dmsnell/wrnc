@@ -14,11 +14,20 @@
 		width: $icon-size;
 		float: left;
 		margin-right: 12px;
+		border-radius: $icon-size / 2;
 	}
 
 	.icon {
-		height: 16px;
-		width: 16px;
+		height: 14px;
+		width: 14px;
+		background-color: $gray;
+		border-radius: $icon-size / 4;
+		fill: $white;
+		border: 2px solid $white;
+		padding: 3px;
+		position: relative;
+			left: 20px - $icon-size;
+			top: $icon-size - 18px;
 	}
 
 	.subject:not(.excerpt) {
