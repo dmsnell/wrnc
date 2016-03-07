@@ -12,4 +12,4 @@ After cloning this repository, create a `config.js` file in the project root to 
 export const oAuthToken = 'Your_Token_Here'
 ```
 
-After this configuration, simply run `rpm run-script start` and navigate to the appropriate location in your browser.
+After this configuration, simply run `rpm run-script run` and navigate to the appropriate location in your browser.
