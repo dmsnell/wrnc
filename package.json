@@ -45,6 +45,7 @@
     "immutable": "3.7.6",
     "lodash": "4.6.1",
     "moment": "2.11.2",
+    "ramda": "0.19.1",
     "react": "0.14.7",
     "react-dom": "0.14.7",
     "react-redux": "4.4.0",

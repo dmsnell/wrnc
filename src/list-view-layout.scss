@@ -1,0 +1,26 @@
+@import "~styles/color.scss";
+@import "~styles/typography.scss";
+
+.list-group {
+	line-height: 21px;
+	color: $gray;
+	font-family: $sans;
+	text-transform: uppercase;
+	border-top: 1px solid $gray;
+	border-bottom: 1px solid $gray;
+	margin-top: 6px;
+	margin-bottom: 6px;
+	padding: 6px 0;
+	font-weight: 600;
+	font-size: 11px;
+	vertical-align: baseline;
+
+	& svg {
+		fill: $gray;
+		height: 16px;
+		width: 16px;
+		position: relative;
+			top: 4px;
+		margin-right: 4px;
+	}
+}
