@@ -25,7 +25,7 @@ After this configuration, simply run `rpm run-script run` and navigate to the ap
 
 Even easier, in standalone mode this app handles its own navigation without URL routing. Just include it and produce it in any React `render` function.
 
-```
+```js
 import NotificationsApp from 'wrnc';
 import { getToken } from './auth';
 
