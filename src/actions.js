@@ -1,7 +1,6 @@
 import {
-	partial,
-	castArray
-} from 'lodash';
+	partial
+} from 'ramda';
 
 import {
 	FILTER_SET,
@@ -10,14 +9,16 @@ import {
 	NOTE_SELECT
 } from 'constants';
 
+const asArray = a => [].concat( a );
+
 export const addNotes = notes => ( {
 	type: NOTE_ADD,
-	notes: castArray( notes )
+	notes: asArray( notes )
 } );
 
 export const removeNotes = ids => ( {
 	type: NOTE_REMOVE,
-	ids: castArray( ids )
+	ids: asArray( ids )
 } );
 
 export const selectNote = id => ( {
@@ -25,7 +26,7 @@ export const selectNote = id => ( {
 	id
 } );
 
-export const unselectNote = partial( selectNote, null );
+export const unselectNote = partial( selectNote, [ null ] );
 
 export const updateFilter = name => ( {
 	type: FILTER_SET,

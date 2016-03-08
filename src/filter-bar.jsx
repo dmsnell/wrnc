@@ -1,18 +1,18 @@
 import React from 'react';
 import classNames from 'classnames';
 import {
+	always,
 	compose,
-	constant,
-	getOr,
-	matchesProperty,
 	partial,
 	pick,
-	property
-} from 'lodash/fp';
+	prop,
+	propEq,
+	propOr
+} from 'ramda';
 
 require( 'filter-bar.scss' );
 
-const filterExtractor = compose( pick( [ 'name', 'filter' ] ), property( 'props' ) );
+const filterExtractor = compose( pick( [ 'name', 'filter' ] ), prop( 'props' ) );
 
 const FilterBar = state => React.createClass( {
 	componentWillMount() {
@@ -57,10 +57,10 @@ const FilterBarFactory = () => {
 		filters: []
 	};
 
-	const getFilter = name => getOr(
-		constant( true ),
+	const getFilter = name => propOr(
+		always( true ),
 		'filter',
-		state.filters.find( matchesProperty( 'name', name ) )
+		state.filters.find( propEq( 'name', name ) )
 	);
 
 	return {

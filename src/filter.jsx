@@ -1,7 +1,3 @@
-import {
-	noop
-} from 'lodash';
-
-const Filter = noop;
+const Filter = () => null;
 
 export default Filter;

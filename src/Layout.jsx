@@ -1,6 +1,4 @@
-import {
-	compose
-} from 'lodash/fp';
+import { compose } from 'ramda';
 import React from 'react';
 import { connect } from 'react-redux';
 

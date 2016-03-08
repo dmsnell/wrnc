@@ -1,8 +1,6 @@
 import React from 'react';
 import Gridicon from 'gridicons';
-import {
-	partial
-} from 'lodash';
+import { partial } from 'ramda';
 import moment from 'moment';
 
 require( 'note-list-view.scss' );
@@ -13,9 +11,9 @@ const NoteListView = React.createClass( {
 			note,
 			selectNote
 		} = this.props;
-		
-		const selectThisNote = partial( selectNote, note.get( 'id' ) );
-		
+
+		const selectThisNote = partial( selectNote, [ note.get( 'id' ) ] );
+
 		const avatar = note.get( 'avatar' );
 		const icon = note.get( 'icon' );
 		const subject = note.getIn( [ 'subject', 'text' ] );

@@ -1,9 +1,7 @@
-import {
-	noop
-} from 'lodash';
-
 import fromApi from './from-api';
 import { wpcom } from 'wpcom-connection';
+
+const noop = () => null;
 
 const state = {
 	addNotes: noop,

@@ -1,11 +1,16 @@
 import {
+	apply,
 	compose,
-	get,
-	getOr,
-	mapValues,
-} from 'lodash/fp';
+	flip,
+	head,
+	mapObjIndexed,
+	nth,
+	of,
+	prop,
+	propOr
+} from 'ramda';
 
-const mapNoticon = key => getOr( 'star', key, {
+const mapNoticon = key => propOr( 'star', key, {
 	'\uf814': 'mention',
 	'\uf300': 'comment',
 	'\uf801': 'add',
@@ -18,15 +23,15 @@ const mapNoticon = key => getOr( 'star', key, {
 	'\uf414': 'warning'
 } );
 
-const avatar = get( 'icon' );
-const body = get( 'body' );
-const icon = compose( mapNoticon, get( 'noticon' ) );
-const id = get( 'id' );
-const read = get( 'read' );
-const subject = getOr( 'missing subject', 'subject[0]' );
-const subjectExcerpt = getOr( undefined, 'subject[1]' );
-const timestamp = compose( Date.parse, get( 'timestamp' ) );
-const type = get( 'type' );
+const avatar = prop( 'icon' );
+const body = prop( 'body' );
+const icon = compose( mapNoticon, prop( 'noticon' ) );
+const id = prop( 'id' );
+const read = prop( 'read' );
+const subject = compose( head, prop( 'subject' ) );
+const subjectExcerpt = compose( nth( 1 ), propOr( [], 'subject' ) );
+const timestamp = compose( Date.parse, prop( 'timestamp' ) );
+const type = prop( 'type' );
 
 const propertyGetters = {
 	avatar,
@@ -40,7 +45,9 @@ const propertyGetters = {
 	type
 };
 
-const noteFromApi = note => mapValues( f => f( note ), propertyGetters );
+const transformerFrom = flip( mapObjIndexed ); // {k: a} -> (a -> b) -> {k: b}
+const applicator = compose( flip( apply ), of ); // a -> ((a -> b) -> b)
+const noteFromApi = compose( transformerFrom( propertyGetters ), applicator );
 
 export default ( { last_seen_time, notes }) => ( {
 	lastSeenTime: last_seen_time,

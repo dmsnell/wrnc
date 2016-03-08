@@ -1,7 +1,7 @@
 import React from 'react';
 import { IndexRoute, Router, Route, browserHistory } from 'react-router';
 import { compose, applyMiddleware } from 'redux';
-import { identity } from 'lodash';
+import { identity } from 'ramda';
 
 import {
 	FILTER_SET,
