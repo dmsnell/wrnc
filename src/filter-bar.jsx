@@ -3,6 +3,8 @@ import classNames from 'classnames';
 import {
 	always,
 	compose,
+	find,
+	flip,
 	partial,
 	pick,
 	prop,
@@ -12,9 +14,13 @@ import {
 
 require( 'filter-bar.scss' );
 
+const onlyFilters = compose( propEq( 'name', 'Filter' ), prop( 'type' ) );
 const filterExtractor = compose( pick( [ 'name', 'filter' ] ), prop( 'props' ) );
 
-const FilterBar = state => React.createClass( {
+export const Filter = ( { isSelected, name, onClick } ) =>
+	<li className={ classNames( { isSelected } ) } { ...{ onClick } }>{ name }</li>;
+
+export const FilterBar = state => React.createClass( {
 	componentWillMount() {
 		this.updateFilterList();
 	},
@@ -26,7 +32,9 @@ const FilterBar = state => React.createClass( {
 	updateFilterList() {
 		const { children } = this.props;
 
-		state.filters = React.Children.map( children, filterExtractor );
+		state.filters = React.Children.toArray( children )
+			.filter( onlyFilters )
+			.map( filterExtractor );
 	},
 
 	render() {
@@ -39,13 +47,11 @@ const FilterBar = state => React.createClass( {
 		return (
 			<ul className="filter-bar">
 				{ filters.map( ( { name }, key ) => (
-					<li
-						className={ classNames( { isSelected: selectedFilter === name } ) }
+					<Filter
+						isSelected={ selectedFilter === name }
 						onClick={ partial( updateFilter, [ name ] ) }
-						{ ...{ key } }
-					>
-						{ name }
-					</li>
+						{ ...{ key, name } }
+					/>
 				) ) }
 			</ul>
 		);

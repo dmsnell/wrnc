@@ -1,8 +1,7 @@
 import React from 'react';
 import { always } from 'ramda';
 
-import Filter from 'filter';
-import FilterBarFactory from 'filter-bar';
+import FilterBarFactory, { Filter } from 'filter-bar';
 import NoteListView from 'note-list-view';
 import Gridicon from 'gridicons';
 import GroupedList, { GroupHeader } from 'grouped-list';
