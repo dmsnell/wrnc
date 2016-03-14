@@ -4,16 +4,18 @@ import { applyMiddleware } from 'redux';
 import createLogger from 'redux-logger';
 
 import { AppFactory } from 'src/app';
-import RoutedApp from 'routing-wrapper';
+import RouteWrapper from 'routing-wrapper';
+import OAuthApp from 'oauth-wrapper';
 
-import {
-	oAuthToken
-} from './config.js';
+const RoutedApp = RouteWrapper( AppFactory, applyMiddleware( createLogger() ) );
+
+const clientId = 35604;
+const redirectPath = '/connect/response';
 
 ReactDOM.render(
-	RoutedApp(
-		AppFactory,
-		applyMiddleware( createLogger() )
-	)( { ...{ oAuthToken } } ),
+	<OAuthApp { ...{ clientId, redirectPath } }>
+		<RoutedApp />
+	</OAuthApp>,
 	document.getElementById( 'root' )
 );
+

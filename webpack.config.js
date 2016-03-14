@@ -30,6 +30,9 @@ module.exports = {
 			'</head><body><div id="root"/>' +
 			'<script src="/index.js"></script>' +
 			'</body></html>'
+		} ),
+		new webpack.ProvidePlugin( {
+			'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
 		} )
 	],
 	resolve: {
