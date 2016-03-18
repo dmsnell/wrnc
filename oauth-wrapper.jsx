@@ -10,6 +10,8 @@ import {
 	tail
 } from 'ramda';
 
+require( './oauth-wrapper.scss' );
+
 const baseUrl = 'https://public-api.wordpress.com/oauth2/authorize';
 
 const getToken = compose(
