@@ -6,7 +6,7 @@ import {
 	invoker
 } from 'ramda';
 
-const timeRange = ( end, start ) => ( { props: { note } } ) => apply( and, ap(
+const timeRange = ( end, start ) => ( { props: { note } } ) => note && apply( and, ap(
 	[
 		invoker( 1, 'isAfter')( start ),
 		invoker( 1, 'isSameOrBefore')( end )
@@ -34,8 +34,11 @@ export const before7Days = timeRange(
 	0
 );
 
+export const isPlaceholder = element =>
+	element.type.displayName === 'NoteListPlaceholder';
+
 export const saysWordPress = ( { props: { note } } ) =>
-	note
+	note && note
 		.getIn( [ 'subject', 'text' ] )
 		.toLowerCase()
 		.includes( 'wordpress' );

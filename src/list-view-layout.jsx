@@ -1,11 +1,13 @@
 import React from 'react';
-import { always } from 'ramda';
+import { always, range } from 'ramda';
 
 import FilterBarFactory, { Filter } from 'filter-bar';
 import NoteListView from 'note-list-view';
+import ListViewPlaceholder from 'note-list-placeholder';
 import Gridicon from 'gridicons';
 import GroupedList, { GroupHeader } from 'grouped-list';
 import {
+	isPlaceholder,
 	saysWordPress,
 	fromToday,
 	fromYesterday,
@@ -51,6 +53,9 @@ const ListViewLayout = React.createClass( {
 					<Filter name="Likes" filter={ propEquals( 'type', 'like' ) } />
 				</FilterBar>
 				<GroupedList>
+					<GroupHeader filter={ isPlaceholder }>
+						<Gridicon icon="cloud-download" /> Loading notifications…
+					</GroupHeader>
 					<GroupHeader filter={ saysWordPress }>
 						<Gridicon icon="my-sites" /> WordPress
 					</GroupHeader>
@@ -66,6 +71,10 @@ const ListViewLayout = React.createClass( {
 					<GroupHeader filter={ before7Days }>
 						<Gridicon icon="time" /> Older than a week
 					</GroupHeader>
+
+					{ ! notes.toList().size &&
+						range(1, 8).map( key =>
+							<ListViewPlaceholder { ...{ key } } /> ) }
 
 					{ notes.map( ( note, key ) => (
 						<NoteListView {...{ key, note, selectNote } } />

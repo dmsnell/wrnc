@@ -1,0 +1,26 @@
+@import "~styles/sizes.scss";
+@import '~styles/placeholders.scss';
+
+.note-list-placeholder {
+	margin-bottom: 23px;
+
+	& .avatar {
+		@include placeholder;
+		width: $icon-size;
+		height: $icon-size;
+	}
+
+	& .subject {
+		@include placeholder;
+		margin-top: -$icon-size;
+		margin-left: 50px;
+		min-height: 18px;
+	}
+
+	& .excerpt {
+		@include placeholder( 35% );
+		margin-left: 50px;
+		margin-top: 4px;
+		min-height: 12px;
+	}
+}
