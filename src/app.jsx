@@ -16,10 +16,10 @@ const App = store => React.createClass( {
 	}
 } );
 
-export const AppFactory = ( middleware = identity ) => {
+export const AppFactory = ( enhancers = identity ) => {
 	const store = createStore(
 		reducers,
-		middleware
+		enhancers
 	);
 
 	return {
