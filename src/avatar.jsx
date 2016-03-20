@@ -21,10 +21,12 @@ export const Avatar = React.createClass( {
 			return;
 		}
 
-		this.setState( { hasLoaded: false }, () => {
-			const avatar = new Image();
-			avatar.onload = this.replaceMysteryMan;
-			avatar.src = src;
+		const avatar = new Image();
+		avatar.onload = this.replaceMysteryMan;
+		avatar.src = src;
+
+		this.setState( {
+			hasLoaded: !! avatar.complete
 		} );
 	},
 
