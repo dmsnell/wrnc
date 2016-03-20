@@ -7,14 +7,15 @@ This project aims to create a fully-usable notifications client for the WordPres
 
 ### Running Locally
 
-After cloning this repository, create a `config.js` file in the project root to hold your oAuth Token from WordPress.com. You will need to [create an application](https://developer.wordpress.com/apps/) on the WordPress.com developer dashboard if you haven't done so already. If you choose a host from anything other than `notifications.dev:8888` you will need to modify the run script in `package.json`.
+This app is designed to run with a default WordPress.com authentication process, but you are free to modify it to run on your own if you have [created an application](https://developer.wordpress.com/apps/) on the WordPress.com developer dashboard. If you choose a host from anything other than `notifications.dev:8888` you will need to modify the run script in `package.json`.
 
-```js
-// config.js
-export const oAuthToken = 'Your_Token_Here'
+Make sure that you have added the appropriate entry in your `hosts` file. For example, if running on OSX and using the default `notifications.dev:8888` address, add the following line to `/etc/hosts`
+
+```
+127.0.0.1	notifications.dev
 ```
 
-After this configuration, simply run `rpm run-script run` and navigate to the appropriate location in your browser.
+After cloning and verifying the settings, run `rpm run-script run` and navigate to the appropriate location in your browser. The development server should redirect to a login page on WordPress.com and then return to the notifications app after authenticating.
 
 #### Known Issues
 
