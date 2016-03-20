@@ -3,6 +3,8 @@ import Gridicon from 'gridicons';
 import { partial } from 'ramda';
 import moment from 'moment';
 
+import Avatar from 'avatar';
+
 require( 'note-list-view.scss' );
 
 const NoteListView = React.createClass( {
@@ -22,8 +24,10 @@ const NoteListView = React.createClass( {
 
 		return (
 			<div className="note-list-view" onClick={ selectThisNote }>
-				<img className="avatar" src={ avatar } />
-				<Gridicon className="icon" { ...{ icon } } />
+				<div>
+					<Avatar src={ avatar } />
+					<Gridicon className="icon" { ...{ icon } } />
+				</div>
 				<div className="subject">{ subject }</div>
 				{ subjectExcerpt &&
 					<div className="subject excerpt">{ subjectExcerpt }</div> }

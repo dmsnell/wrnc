@@ -14,7 +14,7 @@
 		width: $icon-size;
 		float: left;
 		margin-right: 12px;
-		border-radius: $icon-size / 2;
+		clip-path: circle( ($icon-size / 2) at center)
 	}
 
 	.icon {
