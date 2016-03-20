@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import ApiPoller from 'api-poller';
 import ListViewLayout from 'list-view-layout';
 import SingleViewLayout from 'single-view-layout';
-import { WpcomConnection } from 'wpcom-connection';
+import WpcomConnection from 'wpcom-connection';
 
 import {
 	addNotes, removeNotes, selectNote, unselectNote,
@@ -13,6 +13,14 @@ import {
 } from 'actions';
 
 const Layout = React.createClass( {
+	getInitialState: () => ( {
+		wpcom: null
+	} ),
+
+	connectWpcom( wpcom ) {
+		this.setState( { wpcom } );
+	},
+
 	render() {
 		const {
 			addNotes,
@@ -25,11 +33,13 @@ const Layout = React.createClass( {
 			unselectNote,
 			updateFilter
 		} = this.props;
+		const { wpcom } = this.state;
+		const onAuthUpdated = this.connectWpcom;
 
 		return (
 			<div>
-				<ApiPoller { ...{ addNotes, removeNotes } } />
-				<WpcomConnection { ...{ oAuthToken } } />
+				<ApiPoller { ...{ addNotes, removeNotes, wpcom } } />
+				<WpcomConnection { ...{ oAuthToken, onAuthUpdated } } />
 				{ note
 					? <SingleViewLayout {...{ note, unselectNote } } />
 					: <ListViewLayout {...{ notes, selectNote, selectedFilter, updateFilter } } /> }

@@ -1,19 +1,83 @@
 import React, { PropTypes } from 'react';
+import { always } from 'ramda';
 
-import {
-	startPolling,
-	stopPolling
-} from './poller';
+import fromApi from './from-api';
+
+const noop = always( null );
+
+const fetchNotes = ( wpcom, options ) =>
+	wpcom
+		.req
+		.get( {
+			path: '/notifications/',
+			apiVersion: '1.1'
+		}, options )
+		.then( fromApi );
 
 const ApiPoller = React.createClass( {
-	componentDidMount() {
-		const { addNotes, removeNotes } = this.props;
+	getInitialState: () => ( {
+		timer: null
+	} ),
 
-		startPolling( addNotes, removeNotes );
+	componentDidMount() {
+		this.start();
+	},
+
+	componentDidUpdate() {
+		this.start();
 	},
 
 	componentWillUnmount() {
-		stopPolling();
+		this.stop();
+	},
+
+	async pollingLoop() {
+		const {
+			addNotes = noop,
+			delay = 20 * 1000,
+			wpcom
+		} = this.props;
+
+		const { notes } = await fetchNotes( wpcom, {
+			number: 100
+		} );
+
+		addNotes( notes );
+
+		this.setState( {
+			timer: setTimeout( this.pollingLoop, delay )
+		} );
+	},
+
+	start() {
+		const { wpcom } = this.props;
+		const { timer } = this.state;
+
+		if ( ! wpcom ) {
+			return;
+		}
+
+		if ( null !== timer ) {
+			return;
+		}
+
+		this.setState( {
+			timer: setTimeout( this.pollingLoop, 0 )
+		} );
+	},
+
+	stop() {
+		const { timer } = this.state;
+
+		if ( null === timer ) {
+			return;
+		}
+
+		clearTimeout( timer );
+
+		this.setState( {
+			timer: null
+		} );
 	},
 
 	render() {
@@ -22,8 +86,10 @@ const ApiPoller = React.createClass( {
 } );
 
 ApiPoller.PropTypes = {
+	delay: PropTypes.number.isRequired,
 	addNotes: PropTypes.func,
-	removeNotes: PropTypes.func
+	removeNotes: PropTypes.func,
+	wpcom: PropTypes.func
 };
 
 export default ApiPoller;

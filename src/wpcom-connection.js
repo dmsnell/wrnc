@@ -1,31 +1,47 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
+import { always } from 'ramda';
 import wpcomFactory from 'wpcom';
-import { fromJS } from 'immutable';
-
-let state = fromJS( {
-	oAuthToken: null
-} );
-
-export const wpcom = () => {
-	return wpcomFactory( state.get( 'oAuthToken' ) );
-};
 
 export const WpcomConnection = React.createClass( {
-	componentDidMount() {
-		this.setToken();
-	},
-	
-	componentDidUpdate() {
-		this.setToken();
-	},
-	
-	setToken() {
+	getInitialState: () => ( {
+		oAuthToken: null
+	} ),
+
+	componentWillMount() {
 		const { oAuthToken } = this.props;
 
-		state = state.set( 'oAuthToken', oAuthToken );
+		this.setToken( oAuthToken );
 	},
-	
+
+	componentWillReceiveProps( { oAuthToken } ) {
+		if ( oAuthToken === this.state.oAuthToken ) {
+			return;
+		}
+
+		this.setToken( oAuthToken );
+	},
+
+	announceUpdate() {
+		const { onAuthUpdated = always( null ) } = this.props;
+		const { oAuthToken } = this.state;
+
+		onAuthUpdated( wpcomFactory( oAuthToken ) );
+	},
+
+	setToken( oAuthToken ) {
+		this.setState( {
+			oAuthToken
+		}, this.announceUpdate )
+	},
+
 	render() {
 		return null;
 	}
 } );
+
+WpcomConnection.propTypes = {
+	oAuthToken: PropTypes.string,
+	onAuthUpdated: PropTypes.func
+};
+
+export default WpcomConnection;
