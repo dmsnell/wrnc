@@ -7,7 +7,7 @@ const NoteView = React.createClass( {
 		const {
 			note
 		} = this.props;
-		
+
 		const subject = note.getIn( [ 'subject', 'text' ] );
 		const subjectExcerpt = note.getIn( [ 'subjectExcerpt', 'text' ] );
 		const body = note.get( 'body' );

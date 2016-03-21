@@ -1,14 +1,33 @@
 @import "~styles/color.scss";
+@import "~styles/sizes.scss";
 @import "~styles/typography.scss";
 
 .single-view-layout {
-	.back-link {
+	& .title-bar {
+		height: 39px;
+	}
+
+	& .back-link {
 		display: block;
-		font-family: $serif;
+		float: left;
+		font-family: $sans;
+		font-size: $capital-font-size;
 		margin-bottom: 12px;
+		color: $blue-medium;
+		fill: $blue-medium;
 
 		&:hover {
 			color: $blue-dark;
+			fill: $blue-dark;
 		}
+	}
+
+	& .title {
+		display: flex;
+		justify-content: center;
+		text-transform: uppercase;
+		color: $gray;
+		font-size: $capital-font-size;
+		font-family: $sans;
 	}
 }

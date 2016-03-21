@@ -33,6 +33,7 @@ const read = prop( 'read' );
 const subject = compose( head, prop( 'subject' ) );
 const subjectExcerpt = compose( nth( 1 ), propOr( [], 'subject' ) );
 const timestamp = compose( Date.parse, prop( 'timestamp' ) );
+const title = prop( 'title' );
 const type = prop( 'type' );
 
 const propertyGetters = {
@@ -45,6 +46,7 @@ const propertyGetters = {
 	subject,
 	subjectExcerpt,
 	timestamp,
+	title,
 	type
 };
 
