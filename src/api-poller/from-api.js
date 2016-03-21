@@ -27,6 +27,8 @@ const mapNoticon = key => propOr( 'star', key, {
 const avatar = prop( 'icon' );
 const body = prop( 'body' );
 const hasReplied = compose( has( 'reply_comment' ), propOr( {}, 'ids' ), propOr( {}, 'meta' ) );
+const header = compose( head, propOr( [], 'header' ) );
+const headerExcerpt = compose( nth( 1 ), propOr( [], 'header' ) );
 const icon = compose( mapNoticon, prop( 'noticon' ) );
 const id = prop( 'id' );
 const read = prop( 'read' );
@@ -40,6 +42,8 @@ const propertyGetters = {
 	avatar,
 	body,
 	hasReplied,
+	header,
+	headerExcerpt,
 	icon,
 	id,
 	read,
