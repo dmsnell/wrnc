@@ -2,6 +2,7 @@ import {
 	apply,
 	compose,
 	flip,
+	has,
 	head,
 	mapObjIndexed,
 	nth,
@@ -25,6 +26,7 @@ const mapNoticon = key => propOr( 'star', key, {
 
 const avatar = prop( 'icon' );
 const body = prop( 'body' );
+const hasReplied = compose( has( 'reply_comment' ), propOr( {}, 'ids' ), propOr( {}, 'meta' ) );
 const icon = compose( mapNoticon, prop( 'noticon' ) );
 const id = prop( 'id' );
 const read = prop( 'read' );
@@ -36,6 +38,7 @@ const type = prop( 'type' );
 const propertyGetters = {
 	avatar,
 	body,
+	hasReplied,
 	icon,
 	id,
 	read,

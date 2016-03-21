@@ -17,6 +17,7 @@ const NoteListView = React.createClass( {
 		const selectThisNote = partial( selectNote, [ note.get( 'id' ) ] );
 
 		const avatar = note.get( 'avatar' );
+		const hasReplied = note.get( 'hasReplied' );
 		const icon = note.get( 'icon' );
 		const subject = note.getIn( [ 'subject', 'text' ] );
 		const subjectExcerpt = note.getIn( [ 'subjectExcerpt', 'text' ] );
@@ -28,7 +29,11 @@ const NoteListView = React.createClass( {
 					<Avatar src={ avatar } />
 					<Gridicon className="icon" { ...{ icon } } />
 				</div>
-				<div className="subject">{ subject }</div>
+				<div className="subject">
+					{ hasReplied &&
+						<Gridicon icon="reply" size={ 16 } /> }
+					{ subject }
+				</div>
 				{ subjectExcerpt &&
 					<div className="subject excerpt">{ subjectExcerpt }</div> }
 				<div className="timestamp">{ timestamp }</div>
