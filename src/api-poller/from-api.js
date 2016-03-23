@@ -1,15 +1,21 @@
 import {
 	apply,
 	compose,
+	defaultTo,
 	flip,
 	has,
 	head,
+	isNil,
 	mapObjIndexed,
+	map,
 	nth,
 	of,
 	prop,
-	propOr
+	propOr,
+	reject
 } from 'ramda';
+
+import { parseBlock } from './block-parser';
 
 const mapNoticon = key => propOr( 'star', key, {
 	'\uf814': 'mention',
@@ -25,14 +31,14 @@ const mapNoticon = key => propOr( 'star', key, {
 } );
 
 const avatar = prop( 'icon' );
-const body = prop( 'body' );
+const body = compose( map( parseBlock ), prop( 'body' ) );
 const hasReplied = compose( has( 'reply_comment' ), propOr( {}, 'ids' ), propOr( {}, 'meta' ) );
-const header = compose( head, propOr( [], 'header' ) );
+const header = compose( defaultTo( [] ), head, map( parseBlock ), reject( isNil ), of, head, propOr( [], 'header' ) );
 const headerExcerpt = compose( nth( 1 ), propOr( [], 'header' ) );
 const icon = compose( mapNoticon, prop( 'noticon' ) );
 const id = prop( 'id' );
 const read = prop( 'read' );
-const subject = compose( head, prop( 'subject' ) );
+const subject = compose( head, map( parseBlock ), of, head, prop( 'subject' ) );
 const subjectExcerpt = compose( nth( 1 ), propOr( [], 'subject' ) );
 const timestamp = compose( Date.parse, prop( 'timestamp' ) );
 const title = prop( 'title' );

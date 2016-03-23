@@ -1,5 +1,7 @@
 import React from 'react';
 
+import parseBlocks, { addKey } from 'blocks/block-tree-parser';
+
 require( 'note-view.scss' );
 
 const NoteView = React.createClass( {
@@ -8,11 +10,11 @@ const NoteView = React.createClass( {
 			note
 		} = this.props;
 
-		const header = note.getIn( [ 'header', 'text' ] );
+		const header = parseBlocks( note.get( 'header' ).toJS() );
 		const headerExcerpt = note.getIn( [ 'headerExcerpt', 'text' ] );
-		const subject = note.getIn( [ 'subject', 'text' ] );
+		const subject = parseBlocks( note.get( 'subject' ).toJS() );
 		const subjectExcerpt = note.getIn( [ 'subjectExcerpt', 'text' ] );
-		const body = note.get( 'body' );
+		const body = note.get( 'body' ).toJS().map( parseBlocks );
 
 		return (
 			<div className="note-view">
@@ -22,9 +24,9 @@ const NoteView = React.createClass( {
 				<div className="subject">{ subject }</div>
 				{ subjectExcerpt &&
 					<div className="subject excerpt">{ subjectExcerpt }</div> }
-				{ body.map( ( block, key ) => (
-					<p {...{ key } }>{ block.get( 'text' ) }</p>
-				) ) }
+				<div>
+					{ body.map( addKey ) }
+				</div>
 			</div>
 		);
 	}

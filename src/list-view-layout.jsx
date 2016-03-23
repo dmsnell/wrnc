@@ -8,7 +8,6 @@ import Gridicon from 'gridicons';
 import GroupedList, { GroupHeader } from 'grouped-list';
 import {
 	isPlaceholder,
-	saysWordPress,
 	fromToday,
 	fromYesterday,
 	before2Days,
@@ -55,9 +54,6 @@ const ListViewLayout = React.createClass( {
 				<GroupedList>
 					<GroupHeader filter={ isPlaceholder }>
 						<Gridicon icon="cloud-download" /> Loading notifications…
-					</GroupHeader>
-					<GroupHeader filter={ saysWordPress }>
-						<Gridicon icon="my-sites" /> WordPress
 					</GroupHeader>
 					<GroupHeader filter={ fromToday }>
 						<Gridicon icon="time" /> Today
