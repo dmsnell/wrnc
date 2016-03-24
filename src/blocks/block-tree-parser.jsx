@@ -19,6 +19,7 @@ const HtmlBlock = Element => ( { children } ) =>
 const blockMapping = flip( propOr( TypedBlock ) )( {
 	b: HtmlBlock( 'b' ),
 	blockquote: HtmlBlock( 'blockquote' ),
+	code: HtmlBlock( 'code' ),
 	comment: CommentBlock,
 	em: HtmlBlock( 'em' ),
 	i: HtmlBlock( 'i' ),
