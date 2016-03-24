@@ -13,11 +13,19 @@ import SiteBlock from './site-block';
 import TypedBlock from './typed-block';
 import UserBlock from './user-block';
 
+const HtmlBlock = Element => ( { children } ) =>
+	<Element>{ children }</Element>;
+
 const blockMapping = flip( propOr( TypedBlock ) )( {
+	b: HtmlBlock( 'b' ),
+	blockquote: HtmlBlock( 'blockquote' ),
 	comment: CommentBlock,
+	em: HtmlBlock( 'em' ),
+	i: HtmlBlock( 'i' ),
 	link: LinkBlock,
 	post: PostBlock,
 	site: SiteBlock,
+	strong: HtmlBlock( 'strong' ),
 	user: UserBlock
 } );
 
@@ -26,7 +34,10 @@ export const addKey = ( element, key ) =>
 
 const reduceTree = ( elements, node ) => {
 	if ( 'string' === typeof node ) {
-		return [ ...elements, <span>{ node }</span> ];
+		return [
+			...elements,
+			<span>{ node }</span>
+		];
 	}
 
 	const Element = blockMapping( node.type );

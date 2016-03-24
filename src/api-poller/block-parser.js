@@ -73,7 +73,7 @@ const nodeMappings = flip( propOr( inferNode ) )( {
 
 const newNode = ( text, range = {} ) => ( {
 	...nodeMappings( range.type )( range ),
-	children: [ { type: 'text', text } ]
+	children: [ text ]
 } );
 
 const joinResults = ( [ reduced, remainder, ] ) =>
