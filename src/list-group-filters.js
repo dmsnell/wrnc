@@ -36,9 +36,3 @@ export const before7Days = timeRange(
 
 export const isPlaceholder = element =>
 	element.type.displayName === 'NoteListPlaceholder';
-
-export const saysWordPress = ( { props: { note } } ) =>
-	note && note
-		.getIn( [ 'subject', 'text' ] )
-		.toLowerCase()
-		.includes( 'wordpress' );

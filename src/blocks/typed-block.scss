@@ -1,0 +1,8 @@
+@import "~styles/color.scss";
+
+.text-range.typed {
+	&.type-match {
+		color: $blue-medium;
+		font-weight: bold;
+	}
+}

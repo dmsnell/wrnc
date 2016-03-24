@@ -4,6 +4,7 @@ import { partial } from 'ramda';
 import moment from 'moment';
 
 import Avatar from 'avatar';
+import parseBlocks from 'blocks/block-tree-parser';
 
 require( 'note-list-view.scss' );
 
@@ -19,7 +20,7 @@ const NoteListView = React.createClass( {
 		const avatar = note.get( 'avatar' );
 		const hasReplied = note.get( 'hasReplied' );
 		const icon = note.get( 'icon' );
-		const subject = note.getIn( [ 'subject', 'text' ] );
+		const subject = parseBlocks( note.get( 'subject' ).toJS() );
 		const subjectExcerpt = note.getIn( [ 'subjectExcerpt', 'text' ] );
 		const timestamp = moment( note.get( 'timestamp' ) ).fromNow();
 
