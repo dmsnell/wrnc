@@ -9,7 +9,7 @@ import OAuthApp from 'oauth-wrapper';
 
 const RoutedApp = RouteWrapper( AppFactory, applyMiddleware( createLogger() ) );
 
-const clientId = 35604;
+const clientId = 45492;
 const redirectPath = '/connect/response';
 
 ReactDOM.render(
