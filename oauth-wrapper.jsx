@@ -43,29 +43,31 @@ export const Redirected = receiveToken => React.createClass( {
 } );
 
 export const oAuthWrapper = React.createClass( {
-	getInitialState: () => ( {
-		oAuthToken: Cookies.get( 'oAuthToken' )
-	} ),
+	getInitialState() {
+		return {
+			oAuthToken: Cookies.get( this.props.cookieKey )
+		};
+	},
 
 	clearToken() {
-		Cookies.expire( 'oAuthToken' );
+		Cookies.expire( this.props.cookieKey );
 		window.location.replace( '/' );
 	},
 
-	receiveToken( oAuthToken ) {
-		Cookies.set( 'oAuthToken', oAuthToken );
+	receiveToken( cookieKey, oAuthToken ) {
+		Cookies.set( cookieKey, oAuthToken );
 		window.location.replace( '/' );
 	},
 
 	render() {
-		const { children, clientId, redirectPath } = this.props;
+		const { children, clientId, cookieKey, redirectPath } = this.props;
 		const { oAuthToken } = this.state;
 
 		if ( ! oAuthToken ) {
 			return (
 				<Router history={ browserHistory }>
 					<Route path="/" component={ Redirector( clientId, redirectPath ) } />
-					<Route path={ redirectPath } component={ Redirected( this.receiveToken ) } />
+					<Route path={ redirectPath } component={ Redirected( token => this.receiveToken( cookieKey, token ) ) } />
 				</Router>
 			);
 		}
