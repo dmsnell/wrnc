@@ -16,14 +16,19 @@ export const Avatar = React.createClass( {
 		this.fetchAvatar( src, this.props.src );
 	},
 
+	componentWillUnmount() {
+		this.avatar.removeEventListener( 'load', this.replaceMysteryMan );
+	},
+
 	fetchAvatar( src, prevSrc ) {
 		if ( src === prevSrc ) {
 			return;
 		}
 
 		const avatar = new Image();
-		avatar.onload = this.replaceMysteryMan;
+		avatar.addEventListener( 'load', this.replaceMysteryMan );
 		avatar.src = src;
+		this.avatar = avatar;
 
 		this.setState( {
 			hasLoaded: !! avatar.complete
