@@ -1,7 +1,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
-import { identity } from 'ramda';
+import identity from 'ramda/src/identity';
 
 import Layout from 'layout';
 import reducers from 'reducers';

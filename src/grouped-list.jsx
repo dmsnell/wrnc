@@ -1,11 +1,9 @@
 import React from 'react';
-import {
-	compose,
-	concat,
-	partition,
-	prop,
-	propEq
-} from 'ramda';
+import compose from 'ramda/src/compose';
+import concat from 'ramda/src/concat';
+import partition from 'ramda/src/partition';
+import prop from 'ramda/src/prop';
+import propEq from 'ramda/src/propEq';
 
 const groupFilter = compose( prop( 'filter' ), prop( 'props' ) );
 const hasMatches = a => a.length > 1;

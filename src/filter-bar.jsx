@@ -1,16 +1,12 @@
 import React from 'react';
 import classNames from 'classnames';
-import {
-	always,
-	compose,
-	find,
-	flip,
-	partial,
-	pick,
-	prop,
-	propEq,
-	propOr
-} from 'ramda';
+import always from 'ramda/src/always';
+import compose from 'ramda/src/compose';
+import partial from 'ramda/src/partial';
+import pick from 'ramda/src/pick';
+import prop from 'ramda/src/prop';
+import propEq from 'ramda/src/propEq';
+import propOr from 'ramda/src/propOr';
 
 require( 'filter-bar.scss' );
 

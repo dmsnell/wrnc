@@ -1,10 +1,8 @@
 import moment from 'moment';
-import {
-	and,
-	ap,
-	apply,
-	invoker
-} from 'ramda';
+import and from 'ramda/src/and';
+import ap from 'ramda/src/ap';
+import apply from 'ramda/src/apply';
+import invoker from 'ramda/src/invoker';
 
 const timeRange = ( end, start ) => ( { props: { note } } ) => note && apply( and, ap(
 	[

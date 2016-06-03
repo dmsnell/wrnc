@@ -1,6 +1,4 @@
-import {
-	partial
-} from 'ramda';
+import partial from 'ramda/src/partial';
 
 import {
 	FILTER_SET,

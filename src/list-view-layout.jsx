@@ -1,5 +1,6 @@
 import React from 'react';
-import { always, range } from 'ramda';
+import always from 'ramda/src/always';
+import range from 'ramda/src/range';
 
 import FilterBarFactory, { Filter } from 'filter-bar';
 import NoteListView from 'note-list-view';
