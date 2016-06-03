@@ -10,6 +10,8 @@ import {
 	tail
 } from 'ramda';
 
+import wpcomFactory from 'wpcom';
+
 require( './oauth-wrapper.scss' );
 
 const baseUrl = 'https://public-api.wordpress.com/oauth2/authorize';
@@ -70,12 +72,14 @@ export const oAuthWrapper = React.createClass( {
 			);
 		}
 
+		const wpcom = wpcomFactory( oAuthToken );
+
 		return (
 			<div>
 				<div className="logout-button" onClick={ this.clearToken }>
 					Logout
 				</div>
-				{ React.cloneElement( children, { oAuthToken } ) }
+				{ React.cloneElement( children, { wpcom } ) }
 			</div>
 		);
 	}
