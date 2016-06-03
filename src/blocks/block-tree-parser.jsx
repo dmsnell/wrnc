@@ -1,10 +1,8 @@
 import React from 'react';
-import {
-	flip,
-	head,
-	propOr,
-	tap
-} from 'ramda';
+import flip from 'ramda/src/flip';
+import head from 'ramda/src/head';
+import propOr from 'ramda/src/propOr';
+import tap from 'ramda/src/tap';
 
 import CommentBlock from './comment-block';
 import LinkBlock from './link-block';

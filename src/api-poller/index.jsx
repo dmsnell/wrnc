@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { always } from 'ramda';
+import always from 'ramda/src/always';
 
 import fromApi from './from-api';
 

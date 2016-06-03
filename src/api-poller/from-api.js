@@ -1,19 +1,17 @@
-import {
-	apply,
-	compose,
-	defaultTo,
-	flip,
-	has,
-	head,
-	isNil,
-	mapObjIndexed,
-	map,
-	nth,
-	of,
-	prop,
-	propOr,
-	reject
-} from 'ramda';
+import apply from 'ramda/src/apply';
+import compose from 'ramda/src/compose';
+import defaultTo from 'ramda/src/defaultTo';
+import flip from 'ramda/src/flip';
+import has from 'ramda/src/has';
+import head from 'ramda/src/head';
+import isNil from 'ramda/src/isNil';
+import mapObjIndexed from 'ramda/src/mapObjIndexed';
+import map from 'ramda/src/map';
+import nth from 'ramda/src/nth';
+import of from 'ramda/src/of';
+import prop from 'ramda/src/prop';
+import propOr from 'ramda/src/propOr';
+import reject from 'ramda/src/reject';
 
 import { parseBlock } from './block-parser';
 

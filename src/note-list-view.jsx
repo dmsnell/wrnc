@@ -1,6 +1,6 @@
 import React from 'react';
 import Gridicon from 'gridicons';
-import { partial } from 'ramda';
+import partial from 'ramda/src/partial';
 import moment from 'moment';
 
 import Avatar from 'avatar';

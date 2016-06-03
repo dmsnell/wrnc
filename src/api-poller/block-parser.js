@@ -1,12 +1,8 @@
-import {
-	complement,
-	compose,
-	flip,
-	init,
-	isEmpty,
-	propOr,
-	tail
-} from 'ramda';
+import complement from 'ramda/src/complement';
+import flip from 'ramda/src/flip';
+import init from 'ramda/src/init';
+import isEmpty from 'ramda/src/isEmpty';
+import propOr from 'ramda/src/propOr';
 
 const notEmpty = complement( isEmpty );
 

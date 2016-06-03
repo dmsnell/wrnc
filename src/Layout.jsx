@@ -1,5 +1,5 @@
-import { compose } from 'ramda';
 import React from 'react';
+import compose from 'ramda/src/compose';
 import { connect } from 'react-redux';
 
 import ApiPoller from 'api-poller';
